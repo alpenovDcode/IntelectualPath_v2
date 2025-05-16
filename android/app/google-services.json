@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "462772008865",
+    "project_id": "intelectualpathv2",
+    "storage_bucket": "intelectualpathv2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462772008865:android:205c2d675f6f000f49fde0",
+        "android_client_info": {
+          "package_name": "com.intellectualpath.intelectual_path_v2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgTx_hHuoYscqtJw3DZX0v3JFzDmpOvr0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
