@@ -48,14 +48,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   void _navigateToNextScreen() async {
     final prefs = await SharedPreferences.getInstance();
     final onboardingCompleted = prefs.getBool('onboarding_completed') ?? false;
-
+    
     if (mounted) {
       if (!onboardingCompleted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => const OnboardingScreen(),
-          ),
-        );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const OnboardingScreen(),
+        ),
+      );
       } else {
         // После сплэша всегда переходить на главный виджет приложения
         Navigator.of(context).pushReplacement(
@@ -73,90 +73,90 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       body: Stack(
         children: [
           Container(
-            decoration: const BoxDecoration(
-              gradient: AppTheme.primaryGradient,
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Логотип с анимацией
-                  AnimatedBuilder(
-                    animation: _scaleAnimation, 
-                    builder: (context, child) {
-                      return Transform.scale(
-                        scale: _scaleAnimation.value,
-                        child: child,
-                      );
-                    },
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                            spreadRadius: 2,
-                          ),
-                        ],
+        decoration: const BoxDecoration(
+          gradient: AppTheme.primaryGradient,
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Логотип с анимацией
+              AnimatedBuilder(
+                animation: _scaleAnimation, 
+                builder: (context, child) {
+                  return Transform.scale(
+                    scale: _scaleAnimation.value,
+                    child: child,
+                  );
+                },
+                child: Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        spreadRadius: 2,
                       ),
-                      child: const Icon(
-                        Icons.school_rounded,
-                        size: 70,
-                        color: AppTheme.primaryColor,
-                      ),
-                    ),
+                    ],
                   ),
-                  
-                  const SizedBox(height: 40),
-                  
-                  // Название приложения с анимацией появления
-                  Text(
-                    'IntelectualPath',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      letterSpacing: 1.2,
-                      shadows: [
-                        Shadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                  ).animate().fadeIn(duration: 800.ms, delay: 500.ms),
-                  
-                  const SizedBox(height: 16),
-                  
-                  // Слоган с анимацией появления
-                  Text(
-                    'Учись. Исследуй. Достигай.',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white.withOpacity(0.8),
-                      letterSpacing: 0.5,
-                    ),
-                  ).animate().fadeIn(duration: 800.ms, delay: 800.ms),
-                  
-                  const SizedBox(height: 100),
-                  
-                  // Индикатор загрузки с анимацией
-                  SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: CircularProgressIndicator(
-                      color: Colors.white.withOpacity(0.8),
-                      strokeWidth: 3,
-                    ),
-                  ).animate().fadeIn(duration: 1000.ms, delay: 1000.ms),
-                ],
+                  child: const Icon(
+                    Icons.school_rounded,
+                    size: 70,
+                    color: AppTheme.primaryColor,
+                  ),
+                ),
               ),
-            ),
+              
+              const SizedBox(height: 40),
+              
+              // Название приложения с анимацией появления
+              Text(
+                'IntelectualPath',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  letterSpacing: 1.2,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+              ).animate().fadeIn(duration: 800.ms, delay: 500.ms),
+              
+              const SizedBox(height: 16),
+              
+              // Слоган с анимацией появления
+              Text(
+                'Учись. Исследуй. Достигай.',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white.withOpacity(0.8),
+                  letterSpacing: 0.5,
+                ),
+              ).animate().fadeIn(duration: 800.ms, delay: 800.ms),
+              
+              const SizedBox(height: 100),
+              
+              // Индикатор загрузки с анимацией
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: CircularProgressIndicator(
+                  color: Colors.white.withOpacity(0.8),
+                  strokeWidth: 3,
+                ),
+              ).animate().fadeIn(duration: 1000.ms, delay: 1000.ms),
+            ],
+          ),
+        ),
           ),
           Positioned(
             top: 40,

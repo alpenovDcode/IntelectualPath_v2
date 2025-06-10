@@ -5,6 +5,7 @@ import '../../../widgets/buttons.dart';
 import '../../../config/theme.dart';
 import '../bloc/auth_bloc.dart';
 import '../../dashboard/screens/dashboard_screen.dart';
+import '../services/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -22,6 +23,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
   bool _acceptTerms = false;
+  bool _isLoading = false;
+  late AuthService _authService;
+
+  @override
+  void initState() {
+    super.initState();
+    _authService = context.read<AuthService>();
+  }
 
   @override
   void dispose() {
@@ -265,6 +274,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             );
                           },
                         ).animate().fadeIn(delay: 900.ms).slideY(begin: 0.1, end: 0),
+                        const SizedBox(height: 16),
+                        AppButton(
+                          text: 'Зарегистрироваться через Google',
+                          onPressed: _signInWithGoogle,
+                          type: AppButtonType.outline,
+                          isFullWidth: true,
+                        ),
                         const SizedBox(height: 24),
                         
                         // Ссылка на вход
@@ -295,6 +311,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void _signInWithGoogle() async {
+    setState(() => _isLoading = true);
+    try {
+      final result = await _authService.signInWithGoogle();
+      if (result.isSuccess) {
+        context.read<AuthBloc>().add(
+          AuthSignInEvent.fromUser(result.user!),
+        );
+      } else {
+        _showError(result.error!);
+      }
+    } catch (e) {
+      _showError('Ошибка входа через Google: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
       ),
     );
   }

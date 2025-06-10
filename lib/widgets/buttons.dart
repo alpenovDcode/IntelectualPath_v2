@@ -53,14 +53,14 @@ class AppButton extends StatelessWidget {
             ? const SizedBox(
                 height: 20,
                 width: 20,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
+        ),
               )
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+          children: [
                   if (icon != null) ...[
                     Icon(
                       icon,
@@ -69,12 +69,12 @@ class AppButton extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                   ],
-                  Text(
-                    text,
+            Text(
+              text,
                     style: buttonTextStyle,
-                  ),
-                ],
-              ),
+            ),
+          ],
+        ),
       );
     }
 
@@ -172,7 +172,7 @@ class AppButton extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.w600,
           color: textColor ?? AppTheme.primaryColor,
-        );
+      );
       case AppButtonType.text:
         return TextStyle(
           fontSize: 16,

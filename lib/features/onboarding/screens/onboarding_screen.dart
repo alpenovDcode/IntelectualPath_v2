@@ -70,85 +70,85 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           Expanded(
             child: PageView.builder(
-              controller: _pageController,
-              itemCount: _pages.length,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                  _isLastPage = index == _pages.length - 1;
-                });
-              },
-              itemBuilder: (context, index) {
-                return OnboardingPageWidget(
-                  page: _pages[index],
-                  index: index,
-                );
-              },
-            ),
+            controller: _pageController,
+            itemCount: _pages.length,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+                _isLastPage = index == _pages.length - 1;
+              });
+            },
+            itemBuilder: (context, index) {
+              return OnboardingPageWidget(
+                page: _pages[index],
+                index: index,
+              );
+            },
+          ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 30),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.03),
-                  blurRadius: 5,
-                  offset: const Offset(0, -2),
-                ),
-              ],
-            ),
-            child: SafeArea(
-              top: false,
-              child: Column(
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 30),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.03),
+                    blurRadius: 5,
+                    offset: const Offset(0, -2),
+                  ),
+                ],
+              ),
+              child: SafeArea(
+                top: false,
+                child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Индикаторы страниц
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 20),
-                    child: SmoothPageIndicator(
-                      controller: _pageController,
-                      count: _pages.length,
-                      effect: ExpandingDotsEffect(
-                        dotHeight: 8,
-                        dotWidth: 8,
-                        spacing: 5,
-                        expansionFactor: 3,
-                        activeDotColor: AppTheme.primaryColor,
-                        dotColor: Colors.grey.withOpacity(0.5),
+                  children: [
+                    // Индикаторы страниц
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 20),
+                      child: SmoothPageIndicator(
+                        controller: _pageController,
+                        count: _pages.length,
+                        effect: ExpandingDotsEffect(
+                          dotHeight: 8,
+                          dotWidth: 8,
+                          spacing: 5,
+                          expansionFactor: 3,
+                          activeDotColor: AppTheme.primaryColor,
+                          dotColor: Colors.grey.withOpacity(0.5),
+                        ),
                       ),
                     ),
-                  ),
-                  // Кнопки навигации
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    // Кнопки навигации
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                       // Кнопка "Далее" или "Начать"
                       Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: AppButton(
-                            text: _isLastPage ? 'Начать' : 'Далее',
-                            onPressed: () {
-                              if (_isLastPage) {
-                                _navigateToLogin();
-                              } else {
-                                _pageController.nextPage(
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.easeInOut,
-                                );
-                              }
-                            },
-                            type: AppButtonType.primary,
-                            icon: _isLastPage ? Icons.check : Icons.arrow_forward,
-                            iconRight: true,
+                          text: _isLastPage ? 'Начать' : 'Далее',
+                          onPressed: () {
+                            if (_isLastPage) {
+                              _navigateToLogin();
+                            } else {
+                              _pageController.nextPage(
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                              );
+                            }
+                          },
+                          type: AppButtonType.primary,
+                          icon: _isLastPage ? Icons.check : Icons.arrow_forward,
+                          iconRight: true,
                             textColor: Colors.white,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        ),
+                      ],
+                    ),
+                  ],
               ),
             ),
           ),
@@ -326,13 +326,13 @@ class OnboardingPageWidget extends StatelessWidget {
         future: rootBundle.loadString(page.animationPath!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-            return Lottie.asset(
-              page.animationPath!,
-              height: 460,
-              width: 460,
-              fit: BoxFit.contain,
-              repeat: true,
-              animate: true,
+      return Lottie.asset(
+        page.animationPath!,
+        height: 460,
+        width: 460,
+        fit: BoxFit.contain,
+        repeat: true,
+        animate: true,
             );
           } else if (snapshot.hasError) {
             // Если ошибка — показываем иконку

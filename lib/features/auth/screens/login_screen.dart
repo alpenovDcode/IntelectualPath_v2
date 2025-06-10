@@ -232,6 +232,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             );
                           },
                         ).animate().fadeIn(delay: 700.ms).slideY(begin: 0.1, end: 0),
+                        const SizedBox(height: 16),
+                        AppButton(
+                          text: 'Войти через Google',
+                          onPressed: _signInWithGoogle,
+                          type: AppButtonType.outline,
+                          isFullWidth: true,
+                        ),
                         const SizedBox(height: 24),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -258,16 +265,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ).animate().fadeIn(delay: 800.ms),
-                        const SizedBox(height: 24),
-                        // Кнопка входа через Google
-                        AppButton(
-                          text: 'Войти через Google',
-                          onPressed: _signInWithGoogle,
-                          type: AppButtonType.outline,
-                          icon: Icons.g_mobiledata,
-                          isFullWidth: true,
-                        ),
-                        const SizedBox(height: 20),
                       ],
                     ),
                   ),

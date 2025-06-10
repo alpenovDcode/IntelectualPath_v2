@@ -310,7 +310,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                           SizedBox(
                             width: double.infinity,
                             child: AppButton(
-                              text: _course.isSubscribed
+                              text: _course.isSubscribed 
                                 ? 'Вы записаны'
                                 : 'Подписаться на курс',
                               onPressed: (_isSubscriptionLoading || _course.isSubscribed)

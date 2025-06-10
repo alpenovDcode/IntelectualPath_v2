@@ -50,6 +50,15 @@ class AuthSignInEvent extends AuthEvent {
 
 class AuthSignOutEvent extends AuthEvent {}
 
+class AuthUpdateUserEvent extends AuthEvent {
+  final User user;
+
+  const AuthUpdateUserEvent({required this.user});
+
+  @override
+  List<Object?> get props => [user];
+}
+
 // Состояния
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -95,6 +104,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSignUpEvent>(_onSignUp);
     on<AuthSignInEvent>(_onSignIn);
     on<AuthSignOutEvent>(_onSignOut);
+    on<AuthUpdateUserEvent>(_onUpdateUser);
 
     // Подписка на изменения статуса аутентификации без перезапуска инициализации
     _authSubscription = _authService.userStream.listen((user) {
@@ -175,6 +185,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     
     await _authService.signOut();
     emit(AuthUnauthenticatedState());
+  }
+
+  Future<void> _onUpdateUser(
+    AuthUpdateUserEvent event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoadingState());
+    
+    final result = await _authService.updateUser(event.user);
+    
+    if (result.isSuccess) {
+      emit(AuthAuthenticatedState(event.user));
+    } else {
+      emit(AuthErrorState(result.error ?? 'Ошибка при обновлении данных пользователя'));
+      emit(AuthUnauthenticatedState());
+    }
   }
 
   // Метод для обработки события успешной аутентификации

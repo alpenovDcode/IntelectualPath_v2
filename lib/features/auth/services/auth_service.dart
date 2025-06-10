@@ -288,4 +288,29 @@ class AuthService {
       return AuthResult(error: 'Ошибка при сбросе пароля: $e');
     }
   }
+  
+  // Обновление данных пользователя
+  Future<AuthResult> updateUser(User user) async {
+    print("AuthService: updateUser() вызван для пользователя ${user.id}");
+    try {
+      final currentFirebaseUser = _firebaseAuth.currentUser;
+      if (currentFirebaseUser == null) {
+        return AuthResult(error: 'Пользователь не авторизован');
+      }
+      
+      // Обновляем displayName в Firebase Auth если изменилось
+      if (currentFirebaseUser.displayName != user.name) {
+        await currentFirebaseUser.updateDisplayName(user.name);
+      }
+      
+      // Сохраняем обновленные данные в Firestore
+      final savedUser = await _saveUserToFirestore(user);
+      
+      print("AuthService: updateUser() успешно завершен");
+      return AuthResult(user: savedUser ?? user);
+    } catch (e) {
+      print("AuthService: ошибка при обновлении пользователя: $e");
+      return AuthResult(error: 'Ошибка при обновлении данных: $e');
+    }
+  }
 } 

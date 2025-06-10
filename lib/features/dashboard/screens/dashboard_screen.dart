@@ -17,6 +17,8 @@ import '../../gamification/models/achievement.dart';
 import '../../gamification/models/daily_task.dart';
 import '../../gamification/models/streak.dart';
 import '../../gamification/services/gamification_service.dart';
+import '../../assistant/screens/assistant_screen.dart';
+import '../../../ai_chat_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -111,6 +113,15 @@ class DashboardScreenState extends State<DashboardScreen> {
               foregroundColor: Colors.white,
               elevation: 0,
               actions: [
+                IconButton(
+                  icon: const Icon(Icons.smart_toy),
+                  tooltip: 'Чат с ИИ',
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const AiChatScreen()),
+                    );
+                  },
+                ),
                 IconButton(
                   icon: const Icon(Icons.notifications_outlined),
                   onPressed: () {
@@ -311,9 +322,9 @@ class DashboardScreenState extends State<DashboardScreen> {
             
             const SizedBox(height: 24),
             
-            const Text(
+                          const Text(
               'Ежедневные задания',
-              style: TextStyle(
+                            style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -390,21 +401,21 @@ class DashboardScreenState extends State<DashboardScreen> {
                         padding: const EdgeInsets.all(12),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                            children: [
                             Icon(
                               achievement.icon,
                               size: 32,
                               color: achievement.isUnlocked ? Colors.amber : Colors.grey,
-                            ),
+                              ),
                             const SizedBox(height: 8),
-                            Text(
+                              Text(
                               achievement.title,
                               textAlign: TextAlign.center,
-                              style: TextStyle(
+                                style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: achievement.isUnlocked ? Colors.black : Colors.grey,
+                                ),
                               ),
-                            ),
                             const SizedBox(height: 4),
                             LinearProgressIndicator(
                               value: achievement.progressPercentage,
@@ -412,10 +423,10 @@ class DashboardScreenState extends State<DashboardScreen> {
                               valueColor: AlwaysStoppedAnimation<Color>(
                                 achievement.isUnlocked ? Colors.green : Colors.blue,
                               ),
-                            ),
-                          ],
-                        ),
                       ),
+                    ],
+                  ),
+              ),
                     ).animate().fadeIn(delay: Duration(milliseconds: 400 + index * 100));
                   },
                 ),
@@ -570,14 +581,14 @@ class DashboardScreenState extends State<DashboardScreen> {
                     final course = recommendedCourses[index];
                     return CourseCard(
                       course: course,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
                             builder: (context) => CourseDetailScreen(course: course),
-                          ),
-                        ).then((_) => loadCourses());
-                      },
+                            ),
+                          ).then((_) => loadCourses());
+                        },
                     ).animate().fadeIn(delay: Duration(milliseconds: 500 + index * 100));
                   },
                 ),

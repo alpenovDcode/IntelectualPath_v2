@@ -5,11 +5,18 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../config/theme.dart';
 import '../../../widgets/buttons.dart';
+import '../../../utils/image_helper.dart';
 import '../../auth/bloc/auth_bloc.dart';
 import '../../auth/models/user.dart';
 import '../../courses/services/course_service.dart';
 import '../../courses/models/course.dart';
 import '../../courses/screens/course_detail_screen.dart';
+import 'settings/edit_profile_screen.dart';
+import 'settings/notifications_screen.dart';
+import 'settings/security_screen.dart';
+import 'settings/language_screen.dart';
+import 'settings/about_screen.dart';
+import 'settings/help_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final User user;
@@ -231,28 +238,25 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            _profileImageUrl.isNotEmpty
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
-                    child: Image.network(
-                      _profileImageUrl,
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : CircleAvatar(
-                    radius: 40,
-                    backgroundColor: AppTheme.primaryColor,
-                    child: Text(
-                      widget.user.name.isNotEmpty ? widget.user.name[0].toUpperCase() : '?',
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 6,
+                    spreadRadius: 1,
                   ),
+                ],
+              ),
+              child: ImageHelper.buildProfileImage(
+                imagePath: _profileImageUrl,
+                userName: widget.user.name,
+                size: 80,
+                backgroundColor: AppTheme.primaryColor,
+                isCircular: true,
+              ),
+            ),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -490,10 +494,10 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
             title: const Text('Редактировать профиль'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
-              // Будет реализовано в следующей версии
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Эта функция будет доступна в следующей версии'),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditProfileScreen(user: widget.user),
                 ),
               );
             },
@@ -508,10 +512,10 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
             title: const Text('Уведомления'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
-              // Будет реализовано в следующей версии
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Эта функция будет доступна в следующей версии'),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NotificationsScreen(user: widget.user),
                 ),
               );
             },
@@ -526,10 +530,10 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
             title: const Text('Безопасность'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
-              // Будет реализовано в следующей версии
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Эта функция будет доступна в следующей версии'),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SecurityScreen(user: widget.user),
                 ),
               );
             },
@@ -544,10 +548,10 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
             title: const Text('Язык'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
-              // Будет реализовано в следующей версии
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Эта функция будет доступна в следующей версии'),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => LanguageScreen(user: widget.user),
                 ),
               );
             },
@@ -562,16 +566,29 @@ class ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderS
             title: const Text('О приложении'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () {
-              showAboutDialog(
-                context: context,
-                applicationName: 'IntellectualPath',
-                applicationVersion: '1.0.0',
-                applicationIcon: const FlutterLogo(size: 48),
-                children: [
-                  const Text(
-                    'Платформа для онлайн-обучения с различными курсами и интерактивными уроками.',
-                  ),
-                ],
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AboutScreen(),
+                ),
+              );
+            },
+          ),
+        ),
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: ListTile(
+            leading: const Icon(Icons.help),
+            title: const Text('Помощь'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HelpScreen(),
+                ),
               );
             },
           ),

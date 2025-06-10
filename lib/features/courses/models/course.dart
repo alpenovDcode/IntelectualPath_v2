@@ -317,7 +317,7 @@ class Course {
       totalLessons: modulesList.fold<int>(0, (sum, module) => sum + (module.lessons?.length ?? 0)),
       completedLessons: modulesList.fold<int>(0, (sum, module) => sum + (module.lessons?.where((lesson) => lesson.isCompleted).length ?? 0)),
       progress: modulesList.isEmpty
-          ? 0.0
+          ? 0.0 
           : modulesList.fold<int>(0, (sum, module) => sum + (module.lessons?.where((lesson) => lesson.isCompleted).length ?? 0)) /
             modulesList.fold<int>(0, (sum, module) => sum + (module.lessons?.length ?? 0)),
       lessonsCount: json['lessonsCount'] as int,
